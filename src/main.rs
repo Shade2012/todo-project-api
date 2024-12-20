@@ -1,11 +1,8 @@
-use std::{env, f32::consts::E, sync::Arc};
+use std::{env, sync::Arc};
 use dotenv::dotenv;
-use axum::{http::{header::{ACCEPT, AUTHORIZATION, CONTENT_TYPE}, HeaderValue, Method}, response::IntoResponse, routing::get, Json, Router};
-use serde_json::json;
-use sqlx::{mysql::MySqlPoolOptions, pool, MySqlPool};
+use sqlx::mysql::MySqlPoolOptions;
 use todo_project_api::api::router::{create_router,AppState};
 use tokio::net::TcpListener;
-use tower_http::cors::{self, CorsLayer};
 
 #[tokio::main]
 async fn main() {

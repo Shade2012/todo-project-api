@@ -25,5 +25,5 @@ pub struct UpdateTodoSchema {
 
 #[derive(Serialize, Deserialize, Default)]
 pub struct TodoIdQuery {
-    pub id: Option<u64>, // Use `u64` to match BIGINT UNSIGNED
+    pub id: Option<u64>,
 }
