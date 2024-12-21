@@ -14,7 +14,6 @@ pub struct Todo{
 }
 
 //for json response
-// #[derive(Deserialize, Serialize, Clone)]
 #[derive(Debug, Deserialize, Serialize)]
 #[allow(non_snake_case)]
 

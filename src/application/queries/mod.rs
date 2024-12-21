@@ -1,1 +1,1 @@
-pub mod todo_all_query;
+pub mod todo_queries;
