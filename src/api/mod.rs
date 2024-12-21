@@ -9,5 +9,5 @@ pub async fn health_checker_handler()->impl IntoResponse {
         "status":"success",
         "message":MESSAGE
     });
-    Json(json_response);
+     Json(json_response)
 }

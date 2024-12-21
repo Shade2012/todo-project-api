@@ -1,18 +1,21 @@
-use axum::http::{header::{ACCEPT, AUTHORIZATION, CONTENT_TYPE}, HeaderValue, Method};
-use todo_project_api::api::router::create_router;
-use tower_http::cors::{self, CorsLayer};
+use std::sync::Arc;
+use dotenv::dotenv;
+use todo_project_api::{api::router::{create_router,AppState}, infrastructure::mysql_database::establish_connection, };
+use tokio::net::TcpListener;
 
 #[tokio::main]
 async fn main() {
-    let cors = CorsLayer::new()
-    .allow_origin("http://localhost:3000".parse::<HeaderValue>().unwrap())
-    .allow_methods([Method::GET, Method::POST, Method::PATCH, Method::DELETE])
-    .allow_credentials(true)
-    .allow_headers([AUTHORIZATION,ACCEPT,CONTENT_TYPE]);
 
-    let app = create_router().layer(cors);
-    println!("🚀 Server started successfully");
-    let listener = tokio::net::TcpListener::bind("0.0.0.0:8080").await.unwrap();
+    dotenv().ok();
+    // Initialize the database connection
+    let pool = establish_connection().await;
+    let shared_state = Arc::new(AppState { db: pool });
+
+    // Create the router and attach the state
+    let app = create_router(shared_state);
+    println!("✅ Server started successfully at 0.0.0.0:8080");
+
+    //Start the server
+    let listener = TcpListener::bind("0.0.0.0:8080").await.unwrap();
     axum::serve(listener,app).await.unwrap();
-
 }
