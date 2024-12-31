@@ -6,6 +6,7 @@ use serde::{Deserialize, Serialize};
 #[allow(non_snake_case)]
 pub struct Todo{
     pub id: Option<u32>,
+    pub user_id: Option<u32>,
     pub title: String,
     pub content: String,
     pub complete: Option<i8>,
@@ -20,6 +21,7 @@ pub struct Todo{
 pub struct TodoResponse {
     #[serde(rename = "id")]
     pub id: u32,
+    pub user_id: u32,
     #[serde(rename = "title")]
     pub title: String,
     #[serde(rename = "content")]
@@ -32,6 +34,7 @@ pub struct TodoResponse {
 pub fn todo_to_response(todo:&Todo) -> TodoResponse {
     TodoResponse {
         id: todo.id.as_ref().unwrap().to_owned(),
+        user_id: todo.user_id.as_ref().unwrap().to_owned(),
         title: todo.title.to_owned(),
         content: todo.content.to_owned(),
         complete: match todo.complete {

@@ -6,20 +6,18 @@ use crate::{
     schema::CreateTodoSchema,
 };
 use axum::{
-    extract::State,
-    http::StatusCode,
-    response::IntoResponse,
-    Json,
+    extract::State, http::{header::AUTHORIZATION, StatusCode}, response::IntoResponse, Extension, Json
 };
 use serde_json::json;
-
 pub async fn create_todo_command(
     State(data): State<Arc<AppState>>,
+    Extension(user_id): Extension<u32>,
     Json(body): Json<CreateTodoSchema>,
 ) -> Result<impl IntoResponse, (StatusCode, Json<serde_json::Value>)> {
     // Use the transaction as the executor
     let query_result: Result<sqlx::mysql::MySqlQueryResult, String> =
-        sqlx::query(r#"INSERT INTO todos (title, content) VALUES (?, ?)"#)
+        sqlx::query(r#"INSERT INTO todos (user_id, title, content) VALUES (?, ?, ?)"#)
+            .bind(&user_id)
             .bind(&body.title)
             .bind(&body.content)
             .execute(&data.db) // Pass `&mut tx` here
