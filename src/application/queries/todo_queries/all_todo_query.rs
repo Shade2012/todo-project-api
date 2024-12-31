@@ -4,12 +4,12 @@ use crate::schema::FilterOptions;
 use axum::extract::{Query, State};
 use axum::http::StatusCode;
 use axum::response::IntoResponse;
-use axum::Json;
+use axum::{Extension, Json};
 use std::sync::Arc;
 
 pub async fn todo_list_all_query(
     opts: Option<Query<FilterOptions>>,
-    
+    Extension(user_id): Extension<u32>,
     State(data): State<Arc<AppState>>,
 ) -> Result<impl IntoResponse, (StatusCode, Json<serde_json::Value>)> {
     //Param
@@ -20,7 +20,8 @@ pub async fn todo_list_all_query(
     //Query with macro
     let todos = sqlx::query_as!(
         Todo,
-        r#"SELECT * FROM todos ORDER by id LIMIT ? OFFSET ?"#,
+        r#"SELECT * FROM todos WHERE user_id = ? ORDER by id LIMIT ? OFFSET ?"#,
+        user_id as i32,
         limit as i32,
         offset as i32
     )

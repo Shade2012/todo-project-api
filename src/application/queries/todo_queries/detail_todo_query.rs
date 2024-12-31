@@ -4,12 +4,13 @@ use crate::schema::TodoIdQuery;
 use axum::extract::{Query, State};
 use axum::http::StatusCode;
 use axum::response::IntoResponse;
-use axum::Json;
+use axum::{Extension, Json};
 use serde_json::json;
 use std::sync::Arc;
 
 pub async fn todo_detail_query(
     opts: Option<Query<TodoIdQuery>>,
+    Extension(user_id):Extension<u32>,
     State(data): State<Arc<AppState>>,
 ) -> Result<impl IntoResponse, (StatusCode, Json<serde_json::Value>)>
 {
@@ -17,8 +18,9 @@ pub async fn todo_detail_query(
     let id = opts.id.unwrap_or(0);
     let todo = sqlx::query_as!(
         Todo,
-        r#"SELECT * FROM todos WHERE id = ?"#,
-        id
+        r#"SELECT * FROM todos WHERE id = ? AND user_id = ?"#,
+        id,
+        user_id
     )
     .fetch_one(&data.db)
     .await
