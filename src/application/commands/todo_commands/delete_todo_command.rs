@@ -3,7 +3,7 @@ use std::sync::Arc;
 use axum::{extract::{Path, State}, http::StatusCode, response::IntoResponse, Json};
 use serde_json::json;
 
-use crate::{api::router::AppState, domain::models::todo::todo_to_response};
+use crate::api::router::AppState;
 
 
 pub async fn delete_todo_command (

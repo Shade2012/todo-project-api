@@ -1,6 +1,5 @@
-use std::fmt::format;
 
-use axum::{body::{self, Body}, extract::Request, http::{header::{self, AUTHORIZATION}, StatusCode}, middleware::Next, response::{IntoResponse, Response}, Json};
+use axum::{body::{Body}, extract::Request, http::{header::{AUTHORIZATION}, StatusCode}, middleware::Next, response::{IntoResponse, Response}, Json};
 use chrono::{Duration, Utc};
 use jsonwebtoken::{decode, encode, DecodingKey, EncodingKey, Header, TokenData, Validation};
 use serde::{Deserialize, Serialize};

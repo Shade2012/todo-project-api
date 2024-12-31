@@ -1,9 +1,7 @@
 use std::sync::Arc;
-use jsonwebtoken::{decode,encode,DecodingKey,EncodingKey,Header,TokenData,Validation};
 use axum::{extract::State, http::StatusCode, response::IntoResponse, Json};
-use bcrypt::{hash, verify};
+use bcrypt::verify;
 use serde_json::json;
-use sqlx::mysql::MySqlQueryResult;
 
 use crate::{api::router::AppState, application::middleware::auth::encode_jwt, domain::models::user::{user_to_response, User}, schema::LoginSchema};
 
@@ -25,7 +23,7 @@ pub async fn login_user_command (
             })),
         )
     })?;
-     let password_matched = verify(&body.password, &user.password).map_err(|error|{
+     let password_matched = verify(&body.password, &user.password).map_err(|_|{
         (
             StatusCode::NOT_FOUND,
             Json(json!({

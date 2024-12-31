@@ -1,7 +1,7 @@
 use std::sync::Arc;
 
 use axum::{extract::State, http::StatusCode, response::IntoResponse, Json};
-use bcrypt::{hash, DEFAULT_COST};
+use bcrypt::hash;
 use serde_json::json;
 use crate::domain::models::user::{user_to_response, User};
 use crate::{api::router::AppState, schema::CreateUserSchema};

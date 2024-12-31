@@ -1,6 +1,6 @@
 use crate::api::router::AppState;
-use crate::domain::models::todo::{self, todo_to_response, Todo, TodoResponse};
-use crate::schema::{FilterOptions, TodoIdQuery};
+use crate::domain::models::todo::{todo_to_response, Todo};
+use crate::schema::TodoIdQuery;
 use axum::extract::{Query, State};
 use axum::http::StatusCode;
 use axum::response::IntoResponse;

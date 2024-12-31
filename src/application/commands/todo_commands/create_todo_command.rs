@@ -6,7 +6,7 @@ use crate::{
     schema::CreateTodoSchema,
 };
 use axum::{
-    extract::State, http::{header::AUTHORIZATION, StatusCode}, response::IntoResponse, Extension, Json
+    extract::State, http::StatusCode, response::IntoResponse, Extension, Json
 };
 use serde_json::json;
 pub async fn create_todo_command(

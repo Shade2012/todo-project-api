@@ -7,7 +7,6 @@ use sqlx::MySqlPool;
 
 use crate::application::{commands::{todo_commands::{create_todo_command::create_todo_command, delete_todo_command::delete_todo_command, update_todo_command::update_todo_command}, user_commands::{create_user_command::create_user_command, login_user_command::login_user_command}}, middleware::auth, queries::todo_queries::{all_todo_query::todo_list_all_query, detail_todo_query::todo_detail_query}};
 
-use super::health_checker_handler;
 
 pub struct AppState {
     pub db: MySqlPool,

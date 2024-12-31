@@ -1,11 +1,10 @@
 use crate::api::router::AppState;
-use crate::domain::models::todo::{self, todo_to_response, Todo, TodoResponse};
-use crate::schema::{FilterOptions, TodoIdQuery};
+use crate::domain::models::todo::{todo_to_response, Todo, TodoResponse};
+use crate::schema::FilterOptions;
 use axum::extract::{Query, State};
 use axum::http::StatusCode;
 use axum::response::IntoResponse;
 use axum::Json;
-use serde_json::json;
 use std::sync::Arc;
 
 pub async fn todo_list_all_query(
